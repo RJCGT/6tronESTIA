@@ -12,9 +12,14 @@ namespace {
 DigitalOut myled(LED1);
 InterruptIn mybtn(BUTTON1);
 Timer t;
+Ticker flipper;
 
+void flip(){
+        myled = !myled;
+}
 
 void haut(){
+        flipper.detach();
         myled = !myled;
         t.reset();
         t.start();
@@ -23,9 +28,11 @@ void haut(){
 void bas(){
         myled = !myled;
         t.stop();
+        flipper.attach(&flip, duration_cast<seconds>(t.elapsed_time()).count()<1 ? 0.5 : duration_cast<seconds>(t.elapsed_time()).count());
 }
 int main()
 {
+
         mybtn.rise(&haut);  
         mybtn.fall(&bas);
         while (1) {          // wait around, interrupts will interrupt this!
