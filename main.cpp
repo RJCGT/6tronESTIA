@@ -9,18 +9,28 @@ namespace {
 }
 
 DigitalOut myled(LED1);
+DigitalIn mybtn(BUTTON1);
 
 int main()
 {
-	while (true) {
-		printf("Alive! \n");
-		myled = 1;          // set LED1 pin to high
-        printf("myled = %d \n\r", (uint8_t)myled);
-        ThisThread::sleep_for(500);
+	if (mybtn.is_connected()) {
+        printf("mypin is connected and initialized! \n\r");
+    }
 
-        myled.write(0);     // set LED1 pin to low
-        printf("myled = %d \n\r", myled.read());
+    // Optional: set mode as PullUp/PullDown/PullNone/OpenDrain
+    mybtn.mode(PullNone);
+
+    // press the button and see the console / led change
+   
         
-		ThisThread::sleep_for(PERIOD_MS / 2);
+    
+	while (true) {
+
+        printf("myled = %d \n\r", myled.read());
+        printf("mypin has value : %d \n\r", mybtn.read());
+        myled = mybtn; // toggle led based on value of button
+        ThisThread::sleep_for(250);
+
+		
 	}
 }
