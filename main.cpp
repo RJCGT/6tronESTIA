@@ -4,20 +4,33 @@
  */
 #include "mbed.h"
 
+using namespace std::chrono;
 namespace {
 #define PERIOD_MS 2000ms
 }
 
 DigitalOut myled(LED1);
 InterruptIn mybtn(BUTTON1);
-void flip(){
+Timer t;
+
+
+void haut(){
         myled = !myled;
+        t.reset();
+        t.start();
+}
+
+void bas(){
+        myled = !myled;
+        t.stop();
 }
 int main()
 {
-        mybtn.rise(&flip);  
+        mybtn.rise(&haut);  
+        mybtn.fall(&bas);
         while (1) {          // wait around, interrupts will interrupt this!
-        ThisThread::sleep_for(250);
+        printf("Temps de pression: %llu \n",duration_cast<milliseconds>(t.elapsed_time()).count());
+        ThisThread::sleep_for(PERIOD_MS);
         }
 		
 	
