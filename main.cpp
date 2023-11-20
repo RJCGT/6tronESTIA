@@ -9,28 +9,16 @@ namespace {
 }
 
 DigitalOut myled(LED1);
-DigitalIn mybtn(BUTTON1);
-
+InterruptIn mybtn(BUTTON1);
+void flip(){
+        myled = !myled;
+}
 int main()
 {
-	if (mybtn.is_connected()) {
-        printf("mypin is connected and initialized! \n\r");
-    }
-
-    // Optional: set mode as PullUp/PullDown/PullNone/OpenDrain
-    mybtn.mode(PullNone);
-
-    // press the button and see the console / led change
-   
-        
-    
-	while (true) {
-
-        printf("myled = %d \n\r", myled.read());
-        printf("mypin has value : %d \n\r", mybtn.read());
-        myled = mybtn; // toggle led based on value of button
+        mybtn.rise(&flip);  
+        while (1) {          // wait around, interrupts will interrupt this!
         ThisThread::sleep_for(250);
-
+        }
 		
-	}
+	
 }
