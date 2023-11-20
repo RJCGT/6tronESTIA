@@ -47,6 +47,6 @@ None
 * Modify remote URL to point to your repository and push the application template:
 
     ```sh
-    git remote set-url origin YOUR_REPOSITORY_URL
+    git remote set-url origin https://github.com/RJCGT/6tronESTIA
     git push -u origin master
     ```
