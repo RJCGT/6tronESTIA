@@ -18,14 +18,14 @@ Thread thread2;
 void ping(){
         for(int i=0; i<100;i++){
                 printf("Ping\n");
-                ThisThread::sleep_for(500);
+                
         }
 }
 
 void pong(){
         for(int i=0; i<100;i++){
                 printf("Pong\n");
-                ThisThread::sleep_for(500);
+                
         }
 }
 
@@ -36,7 +36,7 @@ int main()
         while(1){
                 led1 = !led1;
                 printf("Alive !\n");
-                ThisThread::sleep_for(PERIOD_MS);
+                ThisThread::sleep_for(500);
         }
         
 }
